@@ -1,0 +1,24 @@
+Source: aztec
+Section: libs
+Priority: optional
+Maintainer: Slava Monich <slava@monich.com>
+Build-Depends: debhelper (>= 7), libglib2.0-dev, libpng-dev
+Standards-Version: 3.8.4
+
+Package: libaztec
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Aztect encoding library
+
+Package: libaztec-dev
+Section: libdevel
+Architecture: any
+Depends: libaztec (= ${binary:Version}), ${misc:Depends}
+Description: Development files for libaztec
+
+Package: aztec-tools
+Section: misc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Command line Aztec tools
