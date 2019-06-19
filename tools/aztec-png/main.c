@@ -223,8 +223,11 @@ main(
             } else {
                 GMappedFile* map = g_mapped_file_new(file, FALSE, &error);
                 if (map) {
-                    bytes = g_mapped_file_get_bytes(map);
-                    g_mapped_file_unref(map);
+                    const void* contents = g_mapped_file_get_contents(map);
+                    const gsize length = g_mapped_file_get_length(map);
+
+                    bytes = g_bytes_new_with_free_func(contents, length,
+                        (GDestroyNotify)g_mapped_file_unref, map);
                 } else {
                     errmsg("%s\n", error->message);
                     g_error_free(error);
