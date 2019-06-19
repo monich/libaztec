@@ -1,4 +1,10 @@
-aztec (1.0.0) unstable; urgency=low
+libaztec (1.0.1) unstable; urgency=low
+
+  * Support glib < 2.34
+
+ -- Slava Monich <slava@monich.com>  Wed, 19 Jun 2019 03:16:00 +0300
+
+libaztec (1.0.0) unstable; urgency=low
 
   * Initial release
 

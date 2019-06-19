@@ -1,4 +1,4 @@
-Source: aztec
+Source: libaztec
 Section: libs
 Priority: optional
 Maintainer: Slava Monich <slava@monich.com>
