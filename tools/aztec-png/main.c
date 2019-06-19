@@ -39,6 +39,7 @@
 #include <png.h>
 #include <errno.h>
 #include <setjmp.h>
+#include <string.h>
 
 #define RET_OK 0
 #define RET_ERR 1
