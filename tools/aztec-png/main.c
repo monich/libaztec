@@ -189,12 +189,6 @@ main(
         { NULL }
     };
 
-    /* g_type_init has been deprecated since version 2.36
-     * the type system is initialised automagically since then */
-#if !GLIB_CHECK_VERSION(2, 36, 0)
-    g_type_init();
-#endif
-
     options = g_option_context_new("[TEXT] PNG");
     g_option_context_add_main_entries(options, entries, NULL);
     g_option_context_set_summary(options,
