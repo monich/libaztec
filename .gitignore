@@ -2,3 +2,11 @@ build
 results
 *.gcov
 *~
+debian/*.log
+debian/*.substvars
+debian/*.debhelper
+debian/aztec-tools
+debian/files
+debian/libaztec-dev
+debian/libaztec
+debian/tmp
