@@ -1,3 +1,10 @@
+libaztec (1.0.2) unstable; urgency=low
+
+  * Added aztec_encode_inv()
+  * Dropped unnecessary build dependencies
+
+ -- Slava Monich <slava@monich.com>  Fri, 21 Jun 2019 17:11:22 +0300
+
 libaztec (1.0.1) unstable; urgency=low
 
   * Support glib < 2.34

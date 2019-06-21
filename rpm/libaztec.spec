@@ -1,14 +1,11 @@
 Name: libaztec
-Version: 1.0.1
+Version: 1.0.2
 Release: 0
 Summary: Aztec encoder
 Group: Development/Libraries
 License: BSD
-Vendor: slava
 URL: https://github.com/monich/aztec
 Source: %{name}-%{version}.tar.bz2
-BuildRequires: file-devel
-BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(glib-2.0)
 Requires(post): /sbin/ldconfig
