@@ -55,6 +55,14 @@
 #define MAX_COMPACT_LAYERS (4)
 #define MAX_FULL_LAYERS    (32)
 
+typedef
+void
+(*AztecSymbolFillRowProc)(
+    guint8* row,
+    guint size,
+    AztecBits* bits,
+    int i);
+
 typedef struct aztec_pattern {
     guint size;
     const guint16* data;
@@ -1351,32 +1359,63 @@ aztec_encode_pick_config(
 }
 
 static
+void
+aztec_encode_symbol_fill_row(
+    guint8* row,
+    guint size,
+    AztecBits* bits,
+    int i)
+{
+    const gsize rowsize = (size + 7) / 8;
+    guint x;
+
+    for (x = 0; (x + 1) < rowsize; x++) {
+        row[x] = aztec_bits_get(bits, i, 8);
+        i += 8;
+    }
+    row[x] = aztec_bits_get(bits, i, size - x*8);
+}
+
+static
+void
+aztec_encode_symbol_fill_row_inv(
+    guint8* row,
+    guint size,
+    AztecBits* bits,
+    int i)
+{
+    const gsize rowsize = (size + 7) / 8;
+    guint x, tail;
+
+    for (x = 0; (x + 1) < rowsize; x++) {
+        row[x] = aztec_bits_get_inv(bits, i, 8);
+        i += 8;
+    }
+    tail = size - x*8;
+    row[x] = aztec_bits_get_inv(bits, i, tail) << (8 - tail);
+}
+
+static
 AztecSymbol*
 aztec_encode_symbol_new(
     guint symsize,
-    AztecBits* bits)
+    AztecBits* bits,
+    AztecSymbolFillRowProc fill)
 {
     const gsize rowsize = (symsize + 7) / 8;
     AztecSymbol* symbol = g_malloc(sizeof(AztecSymbol) +
         symsize * (sizeof(AztecSymbolRow) + rowsize));
     AztecSymbolRow* rows = (AztecSymbolRow*)(symbol + 1);
     guint8* data = (guint8*)(rows + symsize);
-    guint y, x, i = 0;
+    guint y, i = 0;
 
     symbol->size = symsize;
     symbol->rows = rows;
-    for (y = 0; y < symsize; y++) {
+    for (y = 0, i = 0; y < symsize; y++, i += symsize) {
         guint8* row = data + (y * rowsize);
-        guint tail;
 
+        fill(row, symsize, bits, i);
         rows[y] = row;
-        for (x = 0; (x + 1) < rowsize; x++) {
-            row[x] = aztec_bits_get(bits, i, 8);
-            i += 8;
-        }
-        tail = symsize - x*8;
-        row[x] = aztec_bits_get(bits, i, tail);
-        i += tail;
     }
     return symbol;
 }
@@ -1388,11 +1427,13 @@ aztec_symbol_free(
     g_free(symbol);
 }
 
+static
 AztecSymbol*
-aztec_encode(
+aztec_encode_full(
     const void* data,
     gsize len,
-    guint correction)
+    guint correction,
+    AztecSymbolFillRowProc fill)
 {
     AztecConfig config, config1;
     AztecCodewords* cw = NULL;
@@ -1434,12 +1475,32 @@ aztec_encode(
         aztec_bits_free(mode_bits);
 
         /* Convert the symbol into export format */
-        symbol = aztec_encode_symbol_new(config.symsize, symbol_bits);
+        symbol = aztec_encode_symbol_new(config.symsize, symbol_bits, fill);
         aztec_bits_free(symbol_bits);
     }
     aztec_codewords_free(cw, TRUE);
     aztec_bits_free(bits);
     return symbol;
+}
+
+AztecSymbol*
+aztec_encode(
+    const void* data,
+    gsize len,
+    guint correction)
+{
+    return aztec_encode_full(data, len, correction,
+        aztec_encode_symbol_fill_row);
+}
+
+AztecSymbol*
+aztec_encode_inv(
+    const void* data,
+    gsize len,
+    guint correction) /* Since 1.0.2 */
+{
+    return aztec_encode_full(data, len, correction,
+        aztec_encode_symbol_fill_row_inv);
 }
 
 /*

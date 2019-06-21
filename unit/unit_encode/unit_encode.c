@@ -182,6 +182,42 @@ test_test(
     aztec_symbol_free(symbol);
 }
 
+/* Test (inv) */
+
+static
+void
+test_test_inv(
+    void)
+{
+    static const char msg[] = "test";
+    static const guint8 data[15][2] = {
+        { 0x34, 0x6a }, /*   ## #   ## # # */
+        { 0xdd, 0x5a }, /* ## ### # # ## # */
+        { 0xb0, 0x48 }, /* # ##     #  #   */
+        { 0x7f, 0xf8 }, /*  ############   */
+        { 0x50, 0x10 }, /*  # #       #    */
+        { 0x57, 0xdc }, /*  # # ##### ###  */
+        { 0x34, 0x54 }, /*   ## #   # # #  */
+        { 0xd5, 0x5a }, /* ## # # # # ## # */
+        { 0x54, 0x56 }, /*  # # #   # # ## */
+        { 0x57, 0xd0 }, /*  # # ##### #    */
+        { 0x10, 0x10 }, /*    #       #    */
+        { 0x9f, 0xfc }, /* #  ###########  */
+        { 0x8e, 0xe4 }, /* #   ### ###  #  */
+        { 0xcf, 0x24 }, /* ##  ####  #  #  */
+        { 0xeb, 0x94 }  /* ### # ###  # #  */
+                        /* ----||||----||||*/
+    };
+
+    AztecSymbol* symbol =  aztec_encode_inv(msg, sizeof(msg) - 1,
+        AZTEC_CORRECTION_DEFAULT);
+
+    g_assert(symbol);
+    g_assert(symbol->size == G_N_ELEMENTS(data));
+    test_check2(symbol, data);
+    aztec_symbol_free(symbol);
+}
+
 /* E-mail */
 
 static
@@ -581,6 +617,7 @@ int main(int argc, char* argv[])
     g_test_init(&argc, &argv, NULL);
     g_test_add_func(TEST_("code2d"), test_code2d);
     g_test_add_func(TEST_("test"), test_test);
+    g_test_add_func(TEST_("test_inv"), test_test_inv);
     g_test_add_func(TEST_("email"), test_email);
     g_test_add_func(TEST_("upper"), test_upper);
     g_test_add_func(TEST_("lower"), test_lower);

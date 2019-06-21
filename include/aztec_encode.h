@@ -48,11 +48,25 @@ typedef struct aztec_symbol {
     const AztecSymbolRow* rows;
 } AztecSymbol;
 
+/*
+ * Left-most pixel first (the least significant bit is the left-most pixel).
+ */
 AztecSymbol*
 aztec_encode(
     const void* data,
     gsize len,
     guint correct);
+
+/*
+ * Right-most pixel first (the most significant bit is the left-most
+ * pixel in the group of 8 pixels, although left-most group of 8 pixels
+ * goes first). This is the format used by 1-bit PNGs.
+ */
+AztecSymbol*
+aztec_encode_inv(
+    const void* data,
+    gsize len,
+    guint correct); /* Since 1.0.2 */
 
 void
 aztec_symbol_free(
