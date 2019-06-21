@@ -608,6 +608,40 @@ test_toomuch(
     g_assert(!aztec_encode(msg, sizeof(msg) - 1, AZTEC_CORRECTION_HIGHEST));
 }
 
+/* Binary */
+
+static
+void
+test_binary1(
+    void)
+{
+    static const char msg[60] = { 0 };
+    AztecSymbol* symbol =  aztec_encode(msg, sizeof(msg),
+        AZTEC_CORRECTION_MEDIUM);
+
+    g_assert(symbol);
+    if (g_test_verbose()) {
+        test_print_symbol(symbol);
+    }
+    aztec_symbol_free(symbol);
+}
+
+static
+void
+test_binary2(
+    void)
+{
+    static const char msg[100] = { 0 };
+    AztecSymbol* symbol =  aztec_encode(msg, sizeof(msg),
+        AZTEC_CORRECTION_MEDIUM);
+
+    g_assert(symbol);
+    if (g_test_verbose()) {
+        test_print_symbol(symbol);
+    }
+    aztec_symbol_free(symbol);
+}
+
 /* Common */
 
 #define TEST_(x) "/encode/" x
@@ -629,6 +663,8 @@ int main(int argc, char* argv[])
     g_test_add_func(TEST_("400x1"), test_400x1);
     g_test_add_func(TEST_("400x3"), test_400x3);
     g_test_add_func(TEST_("toomuch"), test_toomuch);
+    g_test_add_func(TEST_("binary1"), test_binary1);
+    g_test_add_func(TEST_("binary2"), test_binary2);
     return g_test_run();
 }
 
