@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 by Slava Monich <slava@monich.com>
+ * Copyright (C) 2019-2020 by Slava Monich <slava@monich.com>
  *
  * You may use this file under the terms of the BSD license as follows:
  *
@@ -194,13 +194,11 @@ aztec_encode_builder_append_binary_length(
     AztecBuilder* builder,
     guint len)
 {
-    const guint remaining = len - builder->binary_offset;
-
-    if (remaining < 32) {
+    if (len < 32) {
         /* Last binary block */
-        builder->binary_len = remaining;
+        builder->binary_len = len;
         aztec_encode_builder_add_bits(builder, builder->binary_len, 5);
-    } else if (remaining < 63) {
+    } else if (len < 63) {
         /*
          * For 32-62 bytes, two 5-bit byte shift sequences are more
          * compact than one 11-bit.
