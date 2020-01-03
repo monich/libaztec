@@ -595,8 +595,43 @@ aztec_encode_data_bits(
 
     /* Split data into blocks */
     while (ptr < end) {
-        const guint8 m = mode[*ptr++];
+        const guint8 c = *ptr++;
+        guint8 m = mode[c];
 
+        if (last_block->mode & MODE_PUNCT) {
+            /*
+             * As a special case, LF and SP in PUNCT mode can only appear
+             * as the second symbol of a two-byte sequence:
+             *
+             * +------+----------+
+             * | Code | Sequence |
+             * +------+----------+
+             * | 2    | CR LF    |
+             * | 3    | . SP     |
+             * | 4    | , SP     |
+             * | 5    | : SP     |
+             * +------+----------+
+             */
+            switch (c) {
+            case LF:
+                if (*(ptr - 2) == CR) {
+                    last_block->len++;
+                    continue;
+                }
+                m &= ~MODE_PUNCT;
+                break;
+            case SP:
+                switch (*(ptr - 2)) {
+                case '.':
+                case ',':
+                case ':':
+                    last_block->len++;
+                    continue;
+                }
+                m &= ~MODE_PUNCT;
+                break;
+            }
+        }
         if (last_block->mode == m) {
             last_block->len++;
             continue;

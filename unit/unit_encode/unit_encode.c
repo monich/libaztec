@@ -446,25 +446,58 @@ void
 test_punct3(
     void)
 {
+    static const char msg[] = "a,\na";
+    static const guint8 data[15][2] = {
+        { 0xc8, 0x76 }, /*    #  ## ## ### */
+        { 0x63, 0x1e }, /* ##   ##  ####   */
+        { 0x0d, 0x76 }, /* # ##     ## ### */
+        { 0xfc, 0x7f }, /*   ############# */
+        { 0x08, 0x28 }, /*    #       # #  */
+        { 0xed, 0x7b }, /* # ## ##### #### */
+        { 0x2c, 0x7a }, /*   ## #   # #### */
+        { 0xa8, 0x7a }, /*    # # # # #### */
+        { 0x2a, 0x1a }, /*  # # #   # ##   */
+        { 0xe8, 0x7b }, /*    # ##### #### */
+        { 0x0e, 0x28 }, /*  ###       # #  */
+        { 0xfb, 0x3f }, /* ## ###########  */
+        { 0xf1, 0x06 }, /* #   #### ##     */
+        { 0x0c, 0x79 }, /*   ##    #  #### */
+        { 0x9f, 0x39 }, /* #####  ##  ###  */
+    };
+    AztecSymbol* symbol =  aztec_encode(msg, sizeof(msg) - 1, 0);
+
+    g_assert(symbol);
+    g_assert(symbol->size == G_N_ELEMENTS(data));
+    test_check2(symbol, data);
+    aztec_symbol_free(symbol);
+}
+
+/* Punct4 */
+
+static
+void
+test_punct4(
+    void)
+{
     static const char msg[] = "$\r\n\r.UP: lo$. @$! , $0++";
     static const guint8 data[19][3] = {
-        { 0x93, 0xe6, 0x07 }, /* ##  #  # ##  ###### */
-        { 0x51, 0xb6, 0x06 }, /* #   # #  ## ## # ## */
-        { 0x3b, 0x9b, 0x07 }, /* ## ###  ## ##  #### */
-        { 0xf3, 0xe5, 0x01 }, /* ##  ##### #  ####   */
-        { 0xb9, 0xde, 0x05 }, /* #  ### # #### ### # */
-        { 0xf2, 0xff, 0x00 }, /*  #  ############    */
-        { 0x28, 0xe0, 0x03 }, /*    # #       #####  */
-        { 0xb1, 0x6f, 0x05 }, /* #   ## ##### ## # # */
-        { 0xbc, 0xe8, 0x06 }, /*   #### #   # ### ## */
-        { 0xbd, 0xea, 0x07 }, /* # #### # # # ###### */
-        { 0xac, 0x68, 0x04 }, /*   ## # #   # ##   # */
-        { 0xb4, 0x2f, 0x06 }, /*   # ## ##### #   ## */
-        { 0x2f, 0xa0, 0x01 }, /* #### #       # ##   */
-        { 0xe4, 0xff, 0x01 }, /*   #  ############   */
-        { 0x43, 0x04, 0x07 }, /* ##    #   #     ### */
-        { 0xab, 0x91, 0x05 }, /* ## # # ##   #  ## # */
-        { 0xff, 0x87, 0x03 }, /* ###########    ###  */
+        { 0x97, 0xe6, 0x07 }, /* ### #  # ##  ###### */
+        { 0x5d, 0xb6, 0x06 }, /* # ### #  ## ## # ## */
+        { 0xef, 0x2f, 0x06 }, /* #### ####### #   ## */
+        { 0x3f, 0x44, 0x00 }, /* ######    #   #     */
+        { 0xbd, 0x5e, 0x04 }, /* # #### # #### #   # */
+        { 0xf2, 0x7f, 0x01 }, /*  #  ########### #   */
+        { 0x20, 0x60, 0x02 }, /*      #       ##  #  */
+        { 0xbd, 0x6f, 0x05 }, /* # #### ##### ## # # */
+        { 0xb4, 0x68, 0x07 }, /*   # ## #   # ## ### */
+        { 0xb1, 0xea, 0x07 }, /* #   ## # # # ###### */
+        { 0xa0, 0xe8, 0x05 }, /*      # #   # #### # */
+        { 0xb4, 0x2f, 0x07 }, /*   # ## ##### #  ### */
+        { 0x23, 0x20, 0x00 }, /* ##   #       #      */
+        { 0xe0, 0xff, 0x00 }, /*      ###########    */
+        { 0x47, 0x04, 0x06 }, /* ###   #   #      ## */
+        { 0xa7, 0x46, 0x04 }, /* ###  # # ##   #   # */
+        { 0xf3, 0x1f, 0x02 }, /* ##  #########    #  */
         { 0x6c, 0x63, 0x01 }, /*   ## ## ##   ## #   */
         { 0xc7, 0xf7, 0x07 }  /* ###   ##### ####### */
     };
@@ -719,6 +752,7 @@ int main(int argc, char* argv[])
     g_test_add_func(TEST_("punct1"), test_punct1);
     g_test_add_func(TEST_("punct2"), test_punct2);
     g_test_add_func(TEST_("punct3"), test_punct3);
+    g_test_add_func(TEST_("punct4"), test_punct4);
     g_test_add_func(TEST_("digit"), test_digit);
     g_test_add_func(TEST_("compact4"), test_compact4);
     g_test_add_func(TEST_("full4"), test_full4);
