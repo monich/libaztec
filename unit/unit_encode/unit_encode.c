@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 by Slava Monich <slava@monich.com>
+ * Copyright (C) 2019-2020 by Slava Monich <slava@monich.com>
  *
  * You may use this file under the terms of the BSD license as follows:
  *
@@ -206,7 +206,6 @@ test_test_inv(
         { 0x8e, 0xe4 }, /* #   ### ###  #  */
         { 0xcf, 0x24 }, /* ##  ####  #  #  */
         { 0xeb, 0x94 }  /* ### # ###  # #  */
-                        /* ----||||----||||*/
     };
 
     AztecSymbol* symbol =  aztec_encode_inv(msg, sizeof(msg) - 1,
@@ -346,23 +345,23 @@ test_mixed(
     /* N.B. NULL terminator is included in the message */
     static const char msg[] = "|Up_lo^.@. @1^";
     static const guint8 data[19][3] = {
-        { 0xff, 0x36, 0x07 }, /* ######## ## ##  ### */
-        { 0xd5, 0xac, 0x05 }, /* # # # ##  ## # ## # */
-        { 0x4b, 0x95, 0x05 }, /* ## #  # # # #  ## # */
-        { 0xc5, 0xe9, 0x06 }, /* # #   ###  # ### ## */
-        { 0xbe, 0xd6, 0x07 }, /*  ##### # ## # ##### */
-        { 0xff, 0x7f, 0x03 }, /* ############### ##  */
-        { 0x35, 0xa0, 0x01 }, /* # # ##       # ##   */
-        { 0xb3, 0xef, 0x01 }, /* ##  ## ##### ####   */
-        { 0xaa, 0xe8, 0x07 }, /*  # # # #   # ###### */
-        { 0xb1, 0xea, 0x01 }, /* #   ## # # # ####   */
-        { 0xa3, 0x28, 0x00 }, /* ##   # #   # #      */
-        { 0xa9, 0xaf, 0x06 }, /* #  # # ##### # # ## */
-        { 0x22, 0xe0, 0x07 }, /*  #   #       ###### */
-        { 0xe8, 0xff, 0x01 }, /*    # ############   */
-        { 0x8e, 0x1a, 0x02 }, /*  ###   # # ##    #  */
-        { 0x4f, 0x06, 0x06 }, /* ####  #  ##      ## */
-        { 0x21, 0x20, 0x02 }, /* #    #       #   #  */
+        { 0xef, 0xb7, 0x01 }, /* #### ###### ## ##   */
+        { 0xb5, 0x66, 0x05 }, /* # # ## # ##  ## # # */
+        { 0xff, 0x86, 0x07 }, /* ######## ##    #### */
+        { 0x55, 0x33, 0x05 }, /* # # # # ##  ##  # # */
+        { 0xb2, 0xc6, 0x06 }, /*  #  ## # ##   ## ## */
+        { 0xfb, 0xff, 0x05 }, /* ## ############## # */
+        { 0x21, 0xe0, 0x06 }, /* #    #       ### ## */
+        { 0xa3, 0x2f, 0x07 }, /* ##   # ##### #  ### */
+        { 0xaa, 0xa8, 0x06 }, /*  # # # #   # # # ## */
+        { 0xb1, 0xaa, 0x00 }, /* #   ## # # # # #    */
+        { 0xab, 0xa8, 0x00 }, /* ## # # #   # # #    */
+        { 0xbd, 0x6f, 0x06 }, /* # #### ##### ##  ## */
+        { 0x32, 0x20, 0x07 }, /*  #  ##       #  ### */
+        { 0xe4, 0x7f, 0x01 }, /*   #  ########## #   */
+        { 0x8e, 0x9f, 0x03 }, /*  ###   ######  ###  */
+        { 0x1b, 0xb7, 0x06 }, /* ## ##   ### ## # ## */
+        { 0x7d, 0x66, 0x03 }, /* # #####  ##  ## ##  */
         { 0xcf, 0x5c, 0x04 }, /* ####  ##  ### #   # */
         { 0x5d, 0x69, 0x00 }  /* # ### # #  # ##     */
     };
@@ -374,41 +373,102 @@ test_mixed(
     aztec_symbol_free(symbol);
 }
 
-/* Punct */
+/* Punct1 */
 
 static
 void
-test_punct(
+test_punct1(
     void)
 {
-    /* N.B. NULL terminator is included in the message */
-    static const char msg[] = "$\r\n\r.UP: lo$. @$! , $0++";
-    static const guint8 data[23][3] = {
-        { 0xf3, 0x01, 0x65 }, /* ##  #####       # #  ## */
-        { 0xf5, 0x15, 0x52 }, /* # # ##### # #    #  # # */
-        { 0x4b, 0x45, 0x29 }, /* ## #  # # #   # #  # #  */
-        { 0x9f, 0x92, 0x42 }, /* #####  # #  #  # #    # */
-        { 0x89, 0xfc, 0x5c }, /* #  #   #  ######  ### # */
-        { 0x7e, 0x46, 0x32 }, /*  ######  ##   #  #  ##  */
-        { 0xd8, 0x59, 0x79 }, /*    ## ###  ## # #  #### */
-        { 0xfd, 0xff, 0x73 }, /* # ################  ### */
-        { 0xfc, 0x80, 0x65 }, /*   ######       ## #  ## */
-        { 0xd9, 0xbe, 0x7c }, /* #  ## ## ##### #  ##### */
-        { 0xd0, 0xa2, 0x09 }, /*     # ## #   # ##  #    */
-        { 0xa0, 0xaa, 0x19 }, /*      # # # # # ##  ##   */
-        { 0xc7, 0xa2, 0x54 }, /* ###   ## #   # #  # # # */
-        { 0xd0, 0xbe, 0x3b }, /*     # ## ##### ### ###  */
-        { 0xeb, 0x80, 0x0b }, /* ## # ###       ### #    */
-        { 0xaf, 0xff, 0x23 }, /* #### # ###########   #  */
-        { 0x2f, 0x00, 0x4c }, /* #### #            ##  # */
-        { 0xff, 0x5c, 0x13 }, /* ########  ### # ##  #   */
-        { 0x7e, 0xfd, 0x67 }, /*  ###### # #########  ## */
-        { 0x11, 0x1f, 0x60 }, /* #   #   #####        ## */
-        { 0x05, 0x1c, 0x38 }, /* # #       ###      ###  */
-        { 0xbe, 0x79, 0x66 }, /*  ##### ##  ####  ##  ## */
-        { 0x36, 0xf0, 0x2a }  /*  ## ##      #### # # #  */
+    static const char msg[] = ", ";
+    static const guint8 data[15][2] = {
+        { 0x40, 0x3d }, /*       # # ####  */
+        { 0xbb, 0x50 }, /* ## ### #    # # */
+        { 0x0d, 0x14 }, /* # ##      # #   */
+        { 0xff, 0x1f }, /* #############   */
+        { 0x0b, 0x68 }, /* ## #       # ## */
+        { 0xed, 0x0b }, /* # ## ##### #    */
+        { 0x28, 0x1a }, /*    # #   # ##   */
+        { 0xa9, 0x2a }, /* #  # # # # # #  */
+        { 0x2a, 0x3a }, /*  # # #   # ###  */
+        { 0xeb, 0x1b }, /* ## # ##### ##   */
+        { 0x0e, 0x08 }, /*  ###       #    */
+        { 0xf9, 0x3f }, /* #  ###########  */
+        { 0x82, 0x01 }, /*  #     ##       */
+        { 0xdb, 0x2d }, /* ## ## ### ## #  */
+        { 0x35, 0x6e }  /* # # ##   ### ## */
+    };
+    AztecSymbol* symbol =  aztec_encode(msg, sizeof(msg) - 1, 0);
+
+    g_assert(symbol);
+    g_assert(symbol->size == G_N_ELEMENTS(data));
+    test_check2(symbol, data);
+    aztec_symbol_free(symbol);
+}
+
+/* Punct2 */
+
+static
+void
+test_punct2(
+    void)
+{
+    static const char msg[] = {'\xd0', '\xb0', ',', ' ', '\xd0', '\xb0' };
+    static const guint8 data[15][2] = {
+        { 0xb0, 0x69 }, /*     ## ##  # ## */
+        { 0xab, 0x40 }, /* ## # # #      # */
+        { 0x0f, 0x33 }, /* ####    ##  ##  */
+        { 0xfd, 0x1f }, /* # ###########   */
+        { 0x08, 0x48 }, /*    #       #  # */
+        { 0xea, 0x3b }, /*  # # ##### ###  */
+        { 0x2e, 0x3a }, /*  ### #   # ###  */
+        { 0xad, 0x0a }, /* # ## # # # #    */
+        { 0x2d, 0x5a }, /* # ## #   # ## # */
+        { 0xec, 0x4b }, /*   ## ##### #  # */
+        { 0x0a, 0x38 }, /*  # #       ###  */
+        { 0xfa, 0x3f }, /*  # ###########  */
+        { 0xd1, 0x03 }, /* #   # ####      */
+        { 0xbe, 0x56 }, /*  ##### # ## # # */
+        { 0x34, 0x7e }  /*   # ##   ###### */
     };
     AztecSymbol* symbol =  aztec_encode(msg, sizeof(msg), 0);
+
+    g_assert(symbol);
+    g_assert(symbol->size == G_N_ELEMENTS(data));
+    test_check2(symbol, data);
+    aztec_symbol_free(symbol);
+}
+
+/* Punct3 */
+
+static
+void
+test_punct3(
+    void)
+{
+    static const char msg[] = "$\r\n\r.UP: lo$. @$! , $0++";
+    static const guint8 data[19][3] = {
+        { 0x93, 0xe6, 0x07 }, /* ##  #  # ##  ###### */
+        { 0x51, 0xb6, 0x06 }, /* #   # #  ## ## # ## */
+        { 0x3b, 0x9b, 0x07 }, /* ## ###  ## ##  #### */
+        { 0xf3, 0xe5, 0x01 }, /* ##  ##### #  ####   */
+        { 0xb9, 0xde, 0x05 }, /* #  ### # #### ### # */
+        { 0xf2, 0xff, 0x00 }, /*  #  ############    */
+        { 0x28, 0xe0, 0x03 }, /*    # #       #####  */
+        { 0xb1, 0x6f, 0x05 }, /* #   ## ##### ## # # */
+        { 0xbc, 0xe8, 0x06 }, /*   #### #   # ### ## */
+        { 0xbd, 0xea, 0x07 }, /* # #### # # # ###### */
+        { 0xac, 0x68, 0x04 }, /*   ## # #   # ##   # */
+        { 0xb4, 0x2f, 0x06 }, /*   # ## ##### #   ## */
+        { 0x2f, 0xa0, 0x01 }, /* #### #       # ##   */
+        { 0xe4, 0xff, 0x01 }, /*   #  ############   */
+        { 0x43, 0x04, 0x07 }, /* ##    #   #     ### */
+        { 0xab, 0x91, 0x05 }, /* ## # # ##   #  ## # */
+        { 0xff, 0x87, 0x03 }, /* ###########    ###  */
+        { 0x6c, 0x63, 0x01 }, /*   ## ## ##   ## #   */
+        { 0xc7, 0xf7, 0x07 }  /* ###   ##### ####### */
+    };
+    AztecSymbol* symbol =  aztec_encode(msg, sizeof(msg) - 1, 0);
 
     g_assert(symbol);
     g_assert(symbol->size == G_N_ELEMENTS(data));
@@ -656,7 +716,9 @@ int main(int argc, char* argv[])
     g_test_add_func(TEST_("upper"), test_upper);
     g_test_add_func(TEST_("lower"), test_lower);
     g_test_add_func(TEST_("mixed"), test_mixed);
-    g_test_add_func(TEST_("punct"), test_punct);
+    g_test_add_func(TEST_("punct1"), test_punct1);
+    g_test_add_func(TEST_("punct2"), test_punct2);
+    g_test_add_func(TEST_("punct3"), test_punct3);
     g_test_add_func(TEST_("digit"), test_digit);
     g_test_add_func(TEST_("compact4"), test_compact4);
     g_test_add_func(TEST_("full4"), test_full4);

@@ -705,8 +705,10 @@ aztec_encode_data_bits(
                 aztec_encode_builder_add_bits(&builder, punct[c0], nbits);
             }
             /* Last symbol */
-            aztec_encode_builder_add_bits(&builder, punct
-                [block->data[i]], nbits);
+            if (i < block->len) {
+                aztec_encode_builder_add_bits(&builder, punct
+                    [block->data[i]], nbits);
+            }
         } else {
             /* The rest is handled mode or less identically */
             switch (block->mode) {
