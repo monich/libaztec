@@ -509,6 +509,39 @@ test_punct4(
     aztec_symbol_free(symbol);
 }
 
+/* Punct5 */
+
+static
+void
+test_punct5(
+    void)
+{
+    static const char msg[] = "a\n=";
+    static const guint8 data[15][2] = {
+        { 0x94, 0x4c }, /*   # #  #  ##  # */
+        { 0x93, 0x50 }, /* ##  #  #    # # */
+        { 0x0d, 0x32 }, /* # ##     #  ##  */
+        { 0xfc, 0x5f }, /*   ########### # */
+        { 0x08, 0x68 }, /*    #       # ## */
+        { 0xe9, 0x1b }, /* #  # ##### ##   */
+        { 0x2f, 0x2a }, /* #### #   # # #  */
+        { 0xa9, 0x3a }, /* #  # # # # ###  */
+        { 0x29, 0x4a }, /* #  # #   # #  # */
+        { 0xe9, 0x6b }, /* #  # ##### # ## */
+        { 0x0b, 0x28 }, /* ## #       # #  */
+        { 0xf8, 0x3f }, /*    ###########  */
+        { 0x70, 0x67 }, /*     ### ###  ## */
+        { 0x51, 0x6f }, /* #   # # #### ## */
+        { 0x92, 0x3b }  /*  #  #  ### ###  */
+    };
+    AztecSymbol* symbol =  aztec_encode(msg, sizeof(msg) - 1, 0);
+
+    g_assert(symbol);
+    g_assert(symbol->size == G_N_ELEMENTS(data));
+    test_check2(symbol, data);
+    aztec_symbol_free(symbol);
+}
+
 /* Digit */
 
 static
@@ -753,6 +786,7 @@ int main(int argc, char* argv[])
     g_test_add_func(TEST_("punct2"), test_punct2);
     g_test_add_func(TEST_("punct3"), test_punct3);
     g_test_add_func(TEST_("punct4"), test_punct4);
+    g_test_add_func(TEST_("punct5"), test_punct5);
     g_test_add_func(TEST_("digit"), test_digit);
     g_test_add_func(TEST_("compact4"), test_compact4);
     g_test_add_func(TEST_("full4"), test_full4);

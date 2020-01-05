@@ -642,6 +642,14 @@ aztec_encode_data_bits(
             continue;
         }
 
+        /*
+         * PUNCT mode can't start with LF or SP, those can only be the
+         * second character in a sequence.
+         */
+        if (c == LF || c == SP) {
+            m &= ~MODE_PUNCT;
+        }
+
         /* Start next block */
         block = g_slice_new0(AztecBlock);
         block->data = ptr - 1;
