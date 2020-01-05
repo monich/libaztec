@@ -1,5 +1,5 @@
 Name: libaztec
-Version: 1.0.4
+Version: 1.0.5
 Release: 0
 Summary: Aztec encoder
 Group: Development/Libraries
