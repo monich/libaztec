@@ -591,7 +591,17 @@ aztec_encode_data_bits(
     /* Caller made sure that len > 0 */
     last_block->data = ptr;
     last_block->len = 1;
-    last_block->mode = mode[*ptr++];
+    last_block->mode = mode[*ptr];
+
+    /*
+     * PUNCT mode can't start with LF or SP, those can only be the
+     * second character in a sequence.
+     */
+    if (*ptr == LF || *ptr == SP) {
+        last_block->mode &= ~MODE_PUNCT;
+    }
+
+    ptr++;
 
     /* Split data into blocks */
     while (ptr < end) {
