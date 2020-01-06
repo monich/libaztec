@@ -13,7 +13,7 @@ SRC = main.c
 # Required packages
 #
 
-PKGS += libpng gobject-2.0 glib-2.0
+PKGS += libpng glib-2.0
 
 #
 # Default target
