@@ -1,3 +1,11 @@
+libaztec (1.0.7) unstable; urgency=low
+
+  * Avoid overlinking
+  * Drop unnecessary linkage
+  * Respect arch specific lib dir
+
+ -- Slava Monich <slava@monich.com>  Sat, 23 May 2020 02:28:45 +0300
+
 libaztec (1.0.6) unstable; urgency=low
 
   * Yet another fix for SP and LF in PUNCT mode
