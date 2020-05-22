@@ -74,7 +74,7 @@ BASE_FLAGS = -fPIC
 FULL_CFLAGS = $(BASE_FLAGS) $(CFLAGS) $(DEFINES) $(WARNINGS) $(INCLUDES) \
   -MMD -MP $(shell pkg-config --cflags $(PKGS))
 FULL_LDFLAGS = $(BASE_FLAGS) $(LDFLAGS) -shared -Wl,-soname,$(LIB_SONAME) \
-  $(shell pkg-config --libs $(PKGS)) -lpthread
+  $(shell pkg-config --libs $(PKGS))
 DEBUG_FLAGS = -g
 RELEASE_FLAGS =
 COVERAGE_FLAGS = -g

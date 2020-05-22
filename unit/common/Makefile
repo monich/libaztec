@@ -16,7 +16,7 @@ SRC ?= $(EXE).c
 # Required packages
 #
 
-PKGS += gobject-2.0 glib-2.0
+PKGS += glib-2.0
 
 #
 # Default target
