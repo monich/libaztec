@@ -1,0 +1,3 @@
+debian/tmp/@LIBDIR@/libaztec.so @LIBDIR@
+debian/tmp/@LIBDIR@/pkgconfig/libaztec.pc @LIBDIR@/pkgconfig
+debian/tmp/usr/include/* usr/include

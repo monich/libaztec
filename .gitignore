@@ -8,5 +8,7 @@ debian/*.debhelper
 debian/aztec-tools
 debian/files
 debian/libaztec-dev
+debian/libaztec-dev.install
 debian/libaztec
+debian/libaztec.install
 debian/tmp

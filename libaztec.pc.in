@@ -1,10 +1,10 @@
 name=aztec
-libdir=/usr/lib
+libdir=@libdir@
 includedir=/usr/include
 
 Name: libaztec
 Description: Aztec encoding library
-Version: [version]
+Version: @version@
 Requires.private: glib-2.0
 Libs: -L${libdir} -l${name}
 Cflags: -I${includedir} -I${includedir}/aztec

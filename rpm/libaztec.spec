@@ -33,13 +33,13 @@ Tools to generate Aztec symbols as image files.
 %setup -q
 
 %build
-make KEEP_SYMBOLS=1 release pkgconfig
-make -C tools KEEP_SYMBOLS=1 release
+make LIBDIR=%{_libdir} KEEP_SYMBOLS=1 release pkgconfig
+make -C tools LIBDIR=%{_libdir} KEEP_SYMBOLS=1 release
 
 %install
 rm -rf %{buildroot}
-make install-dev DESTDIR=%{buildroot}
-make -C tools install DESTDIR=%{buildroot}
+make DESTDIR=%{buildroot} LIBDIR=%{_libdir} install-dev
+make DESTDIR=%{buildroot} LIBDIR=%{_libdir} -C tools install
 
 %check
 make test

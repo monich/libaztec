@@ -1,3 +1,0 @@
-debian/tmp/usr/lib/libaztec.so usr/lib
-include/*.h usr/include/aztec
-build/libaztec.pc usr/lib/pkgconfig
