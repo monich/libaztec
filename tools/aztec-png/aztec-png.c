@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 by Slava Monich <slava@monich.com>
+ * Copyright (C) 2019-2022 by Slava Monich <slava@monich.com>
  *
  * You may use this file under the terms of the BSD license as follows:
  *
@@ -38,6 +38,7 @@
 
 #include <png.h>
 #include <errno.h>
+#include <stdio.h>
 #include <setjmp.h>
 #include <string.h>
 
@@ -58,6 +59,7 @@ errmsg(
     ...)
 {
     va_list va;
+
     va_start(va, format);
     vfprintf(stderr, format, va);
     va_end(va);

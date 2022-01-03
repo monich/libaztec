@@ -7,7 +7,7 @@
 #
 
 EXE = aztec-png
-SRC = main.c
+SRC = $(EXE).c
 
 #
 # Required packages
@@ -38,7 +38,7 @@ RELEASE_BUILD_DIR = $(BUILD_DIR)/release
 CC = $(CROSS_COMPILE)gcc
 LD = $(CC)
 WARNINGS = -Wall
-INCLUDES = -I$(LIB_DIR)/include -I$(LIB_DIR)/src
+INCLUDES = -I$(LIB_DIR)/include
 BASE_FLAGS = -fPIC
 BASE_LDFLAGS = $(BASE_FLAGS) $(LDFLAGS)
 BASE_CFLAGS = $(BASE_FLAGS) $(CFLAGS)
@@ -137,10 +137,10 @@ ifeq ($(KEEP_SYMBOLS),0)
 endif
 
 debug_lib:
-	@make $(SUBMAKE_OPTS) -C $(LIB_DIR) debug_lib
+	@$(MAKE) $(SUBMAKE_OPTS) -C $(LIB_DIR) debug_lib
 
 release_lib:
-	@make $(SUBMAKE_OPTS) -C $(LIB_DIR) release_lib
+	@$(MAKE) $(SUBMAKE_OPTS) -C $(LIB_DIR) release_lib
 
 #
 # Install
