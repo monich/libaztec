@@ -1,3 +1,9 @@
+libaztec (1.0.8) unstable; urgency=low
+
+  * Added aztec-svg tool
+
+ -- Slava Monich <slava@monich.com>  Tue, 04 Jan 2022 05:15:30 +0200
+
 libaztec (1.0.7) unstable; urgency=low
 
   * Avoid overlinking
