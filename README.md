@@ -2,7 +2,9 @@
 
 ![icon](aztec.png)
 
-Library and command line tool for generating Aztec codes.
+Library and command line tools for generating Aztec codes.
+
+**aztec-png**
 
 ```console
 Usage:
@@ -20,6 +22,23 @@ Application Options:
   -f, --file=FILE              Encode data from FILE
 ```
 
+**aztec-svg**
+
+```console
+  aztec-svg [OPTION?] [TEXT] SVG
+
+Generates Aztec symbol as an SVG file.
+
+Help Options:
+  -h, --help                   Show help options
+
+Application Options:
+  -p, --pixel=SIZE             Pixel size [1px]
+  -c, --correction=PERCENT     Error correction [23]
+  -b, --border=PIXELS          Border around the symbol [1]
+  -f, --file=FILE              Encode data from FILE
+
+```
 Note that the special filename `-` can be used to specify standard
 input or standard output.
 

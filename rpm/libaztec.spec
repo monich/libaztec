@@ -61,3 +61,4 @@ make test
 %files -n aztec-tools
 %defattr(-,root,root,-)
 %{_bindir}/aztec-png
+%{_bindir}/aztec-svg

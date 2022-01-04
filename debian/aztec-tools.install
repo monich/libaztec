@@ -1,1 +1,2 @@
 debian/tmp/usr/bin/aztec-png usr/bin
+debian/tmp/usr/bin/aztec-svg usr/bin
