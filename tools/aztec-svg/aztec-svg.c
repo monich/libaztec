@@ -39,6 +39,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define RET_OK 0
 #define RET_ERR 1
