@@ -47,12 +47,7 @@
 #define RET_CMDLINE 2
 
 static
-void
-errmsg(
-    const char* format,
-    ...) G_GNUC_PRINTF(1,2);
-
-static
+G_GNUC_PRINTF(1,2)
 void
 errmsg(
     const char* format,
@@ -195,47 +190,48 @@ main(
     options = g_option_context_new("[TEXT] PNG");
     g_option_context_add_main_entries(options, entries, NULL);
     g_option_context_set_summary(options,
-        "Generates Aztec symbol as a PNG file.");
+        "Generates Aztec symbol as a PNG file.\n\n"
+        "If no text is provided on the command line, "
+        "reads the standard input.");
     ok = g_option_context_parse(options, &argc, &argv, &error);
 
-    if (ok && scale > 0 && border >= 0 &&
-        ((argc == 3 && !file) || (argc == 2 && file))) {
+    if (ok && scale > 0 && border >= 0 && (argc == 2 || (argc == 3 && !file))) {
         const char* png = argv[argc - 1];
         const void* data = NULL;
         gsize size;
         GBytes* bytes = NULL;
 
-        if (file) {
-            if (!strcmp(file, "-")) {
-                GByteArray* buf = g_byte_array_new();
-                int c;
+        if (argc == 2 && (!file || !strcmp(file, "-"))) {
+            GByteArray* buf = g_byte_array_new();
+            int c;
 
-                /* Read stdin until EOF */
-                while ((c = getchar()) != EOF) {
-                    const guint8 byte = (guint8)c;
+            /* Read stdin until EOF */
+            while ((c = getchar()) != EOF) {
+                const guint8 byte = (guint8)c;
 
-                    g_byte_array_append(buf, &byte, 1);
-                }
-                bytes = g_byte_array_free_to_bytes(buf);
-            } else {
-                GMappedFile* map = g_mapped_file_new(file, FALSE, &error);
-                if (map) {
-                    const void* contents = g_mapped_file_get_contents(map);
-                    const gsize length = g_mapped_file_get_length(map);
-
-                    bytes = g_bytes_new_with_free_func(contents, length,
-                        (GDestroyNotify)g_mapped_file_unref, map);
-                } else {
-                    errmsg("%s\n", error->message);
-                    g_error_free(error);
-                }
+                g_byte_array_append(buf, &byte, 1);
             }
-            if (bytes) {
-                data = g_bytes_get_data(bytes, &size);
+            bytes = g_byte_array_free_to_bytes(buf);
+        } else if (file) {
+            GMappedFile* map = g_mapped_file_new(file, FALSE, &error);
+
+            if (map) {
+                const void* contents = g_mapped_file_get_contents(map);
+                const gsize length = g_mapped_file_get_length(map);
+
+                bytes = g_bytes_new_with_free_func(contents, length,
+                    (GDestroyNotify)g_mapped_file_unref, map);
+            } else {
+                errmsg("%s\n", error->message);
+                g_error_free(error);
             }
         } else {
             data = argv[1];
             size = strlen(data);
+        }
+
+        if (bytes) {
+            data = g_bytes_get_data(bytes, &size);
         }
 
         if (data) {
