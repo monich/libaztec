@@ -40,6 +40,7 @@ Application Options:
 
 ```
 Note that the special filename `-` can be used to specify standard
-input or standard output.
+input or standard output. If no text is provided on the command line,
+it's read from stdin.
 
-Library API is described [here](include/aztec_encode.h). Enjoy!
+The library API is described [here](include/aztec_encode.h). Enjoy!
