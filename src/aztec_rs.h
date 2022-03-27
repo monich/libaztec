@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 by Slava Monich <slava@monich.com>
+ * Copyright (C) 2019-2022 by Slava Monich <slava@monich.com>
  *
  * You may use this file under the terms of the BSD license as follows:
  *
@@ -46,7 +46,8 @@ aztec_rs_encode16_full(
     const guint16* data,
     guint data_count,
     guint16* ecc,
-    guint ecc_count);
+    guint ecc_count)
+    G_GNUC_INTERNAL;
 
 #endif /* AZTEC_RS_H */
 

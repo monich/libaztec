@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 by Slava Monich <slava@monich.com>
+ * Copyright (C) 2019-2022 by Slava Monich <slava@monich.com>
  *
  * You may use this file under the terms of the BSD license as follows:
  *
@@ -45,51 +45,60 @@ typedef struct aztec_bits {
 
 AztecBits*
 aztec_bits_new(
-    void);
+    void)
+    G_GNUC_INTERNAL;
 
 void
 aztec_bits_free(
-    AztecBits* bits);
+    AztecBits* bits)
+    G_GNUC_INTERNAL;
 
 void
 aztec_bits_reserve(
     AztecBits* bits,
-    guint count);
+    guint count)
+    G_GNUC_INTERNAL;
 
 void
 aztec_bits_clear(
-    AztecBits* bits);
+    AztecBits* bits)
+    G_GNUC_INTERNAL;
 
 void
 aztec_bits_add(
     AztecBits* bits,
     guint32 value,
-    guint nbits);
+    guint nbits)
+    G_GNUC_INTERNAL;
 
 void
 aztec_bits_add_inv(
     AztecBits* bits,
     guint32 value,
-    guint nbits);
+    guint nbits)
+    G_GNUC_INTERNAL;
 
 void
 aztec_bits_set(
     AztecBits* bits,
     guint offset,
     guint32 value,
-    guint nbits);
+    guint nbits)
+    G_GNUC_INTERNAL;
 
 guint
 aztec_bits_get(
     const AztecBits* bits,
     guint offset,
-    guint nbits);
+    guint nbits)
+    G_GNUC_INTERNAL;
 
 guint
 aztec_bits_get_inv(
     const AztecBits* bits,
     guint offset,
-    guint nbits);
+    guint nbits)
+    G_GNUC_INTERNAL;
 
 #endif /* AZTEC_BITS_H */
 
