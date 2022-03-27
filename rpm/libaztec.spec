@@ -1,11 +1,13 @@
 Name: libaztec
-Version: 1.0.8
+
+Version: 1.0.9
 Release: 0
 Summary: Aztec encoder
 Group: Development/Libraries
 License: BSD
 URL: https://github.com/monich/libaztec
 Source: %{name}-%{version}.tar.bz2
+
 BuildRequires: pkgconfig
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(glib-2.0)

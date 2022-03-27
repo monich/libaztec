@@ -1,3 +1,10 @@
+libaztec (1.0.9) unstable; urgency=low
+
+  * Do not export internal symbols from the shared lib
+  * Read stdin if no text provided on the command line
+
+ -- Slava Monich <slava@monich.com>  Sun, 27 Mar 2022 02:18:26 +0200
+
 libaztec (1.0.8) unstable; urgency=low
 
   * Added aztec-svg tool
