@@ -13,7 +13,7 @@ SRC = $(EXE).c
 # Required packages
 #
 
-PKGS += libpng glib-2.0
+PKGS += glib-2.0
 
 #
 # Default target
